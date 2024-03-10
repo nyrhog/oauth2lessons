@@ -1,3 +1,5 @@
+import static org.gradle.api.JavaVersion.VERSION_17
+
 plugins {
     id 'java'
     id 'org.springframework.boot' version '3.2.3'
@@ -18,6 +20,41 @@ repositories {
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+configure(subprojects) {
+    apply plugin: 'java'
+    apply plugin: 'io.spring.dependency-management'
+    apply plugin: 'org.springframework.boot'
+
+    sourceCompatibility = VERSION_17
+    targetCompatibility = VERSION_17
+
+    tasks.withType(JavaCompile) {
+        options.encoding = 'UTF-8'
+    }
+
+    ext {
+        set('springCloudVersion', "2023.0.0")
+    }
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        annotationProcessor "org.projectlombok:lombok:1.18.30"
+        compileOnly "org.projectlombok:lombok:1.18.30"
+        testAnnotationProcessor "org.projectlombok:lombok:1.18.30"
+        testCompileOnly "org.projectlombok:lombok:1.18.30"
+    }
+
+
+    dependencyManagement {
+        imports {
+            mavenBom "org.springframework.cloud:spring-cloud-dependencies:$springCloudVersion"
+        }
+    }
 }
 
 tasks.named('test') {

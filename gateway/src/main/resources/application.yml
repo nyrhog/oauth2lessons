@@ -1,6 +1,8 @@
 server:
   port: 8082
 spring:
+  application:
+    name: gateway
   cloud:
     gateway:
       mvc:
@@ -26,3 +28,8 @@ spring:
             - Method=GET
           filters:
             - RemoveRequestHeader=Cookie
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8010/eureka

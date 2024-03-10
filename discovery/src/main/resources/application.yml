@@ -1,0 +1,17 @@
+server:
+  port: 8010
+spring:
+  application:
+    name: discovery
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+logging:
+  level:
+    org.springframework.cloud.netflix.eureka: off
+    org.springframework.cloud.netflix.discovery: off
